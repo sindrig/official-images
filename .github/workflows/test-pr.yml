@@ -29,16 +29,16 @@ jobs:
           bashbrew --version
           .github/workflows/naughty.sh
 
-  generate-jobs:
+  generate_jobs:
     name: Generate Jobs
     runs-on: ubuntu-latest
     outputs:
-      strategy: ${{ steps.generate-jobs.outputs.strategy }}
+      strategy: ${{ steps.generate_jobs.outputs.strategy }}
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - id: generate-jobs
+      - id: generate_jobs
         name: Generate Jobs
         run: |
           git clone --depth 1 https://github.com/docker-library/bashbrew.git -b master ~/bashbrew
@@ -48,8 +48,8 @@ jobs:
 
   test:
     needs:
-      - generate-jobs
-    strategy: ${{ fromJson(needs.generate-jobs.outputs.strategy) }}
+      - generate_jobs
+    strategy: ${{ fromJson(needs.generate_jobs.outputs.strategy) }}
     name: ${{ matrix.name }}
     runs-on: ${{ matrix.os }}
     steps:
